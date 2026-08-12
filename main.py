@@ -33,7 +33,7 @@ _POSITIVE_TEXT_PATTERN = re.compile(r"\+\s?\d|gain|profit|win|gagn[ée]|r[ée]us
 WELCOME_MESSAGE = (
     "# 👋 Bienvenue {mention} sur TapiTrade ! 🔑\n\n"
     "Ravi de t'avoir parmi nous ✅🎊🚀 💥 🔥.\n\n"
-    "📩 Regarde tes **messages privés** — on vient de t'y envoyer les prochaines étapes pour débloquer tes accès !\n\n"
+    "📩 Regarde tes **messages privés** (de Discord) — on vient de t'y envoyer les prochaines étapes pour débloquer tes accès !\n\n"
     "Team-TapiTrade\n"
     "You are the Key 🔑"
 )
