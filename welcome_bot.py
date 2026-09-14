@@ -1,7 +1,7 @@
 """
 Bot Discord qui poste un message de bienvenue automatique quand un nouveau
 membre rejoint le serveur, et reagit automatiquement aux messages de trades
-gagnants dans #Partage-de-Trades.
+gagnants dans #Partage-de-performances.
 
 Necessite :
 - DISCORD_BOT_TOKEN dans .env (cree via https://discord.com/developers/applications)
@@ -23,7 +23,7 @@ from PIL import Image
 # Unicode "double-struck" (Tapi​Trade-Pool) qui ne matche jamais une
 # recherche en ASCII simple, meme avec .lower() — d'ou l'usage d'IDs.
 WELCOME_CHANNEL_ID = 1262285118291316816  # 1・TapiTrade-Pool
-TRADE_CHANNEL_ID = 1334818319177482281    # 4・Partage-de-Trades
+TRADE_CHANNEL_ID = 1334818319177482281    # 4・Partage-de-performances
 REACTIONS = ["👍", "🔥", "🚀"]
 
 # Detecte un signe "+" colle a un chiffre (+61, +5%, +€2 188,34...) ou un mot positif de trading.
@@ -38,13 +38,19 @@ WELCOME_MESSAGE = (
 
 DM_ONBOARDING_MESSAGE = (
     "👋 Bienvenue dans la communauté TapiTrade !\n"
-    "Pour débloquer ton accès à nos salons d'analyses et d'échanges (pendant 30 jours, "
-    "le temps que tu découvres par toi-même ce qu'on fait 👀), une seule étape :\n\n"
+    "Pour débloquer ton accès (pendant 30 jours, le temps que tu découvres par toi-même "
+    "ce qu'on fait 👀) aux salons :\n"
+    "• 2・Analyses-Indices\n"
+    "• 3・Analyses-Actifs\n"
+    "• 4・Partage-de-performances\n"
+    "• 5・Infos\n\n"
+    "une seule étape :\n\n"
     "📝 Réponds ici avec ces 3 infos 😗\n"
     "• Prénom 😗\n"
     "• 1ère lettre de ton nom 😗\n"
     "• Ville ou Pays 😗\n"
     "Exemple : Christian P. / Allemagne\n\n"
+    "Réponds simplement à ce message avec les informations demandées.\n\n"
     "✅ Dès qu'on a tes infos, l'équipe met à jour ton pseudo et t'ouvre les accès — "
     "tu n'as rien d'autre à faire !\n"
     "À très vite,\n\n"
