@@ -1,7 +1,7 @@
 """
 Bot Discord qui poste un message de bienvenue automatique quand un nouveau
 membre rejoint le serveur, et reagit automatiquement aux messages de trades
-gagnants dans #Partage-de-Trades.
+gagnants dans #Partage-de-performances.
 
 Necessite :
 - DISCORD_BOT_TOKEN dans .env (cree via https://discord.com/developers/applications)
@@ -14,6 +14,7 @@ Usage: python3 welcome_bot.py
 import io
 import os
 import re
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import discord
@@ -23,7 +24,7 @@ from PIL import Image
 # Unicode "double-struck" (Tapi​Trade-Pool) qui ne matche jamais une
 # recherche en ASCII simple, meme avec .lower() — d'ou l'usage d'IDs.
 WELCOME_CHANNEL_ID = 1262285118291316816  # 1・TapiTrade-Pool
-TRADE_CHANNEL_ID = 1334818319177482281    # 4・Partage-de-Trades
+TRADE_CHANNEL_ID = 1334818319177482281    # 4・Partage-de-performances
 STAFF_CHANNEL_ID = 1260936286034722959    # Tapi-TEAM
 REACTIONS = ["👍", "🔥", "🚀"]
 
@@ -158,10 +159,17 @@ async def _handle_onboarding_reply(message: discord.Message) -> None:
     )
     print(f"Reponse d'onboarding de {member} relayee dans #Tapi-TEAM")
 
-    try:
-        await message.channel.send("✅ Merci ! L'équipe met à jour ton accès sous peu, bienvenue dans la communauté 🔑")
-    except discord.Forbidden:
-        pass
+    # Remerciement réservé aux nouveaux arrivants (onboarding récent).
+    # Les autres membres (ex. relances de fin de période gratuite) ne reçoivent
+    # pas de réponse automatique : la réponse est seulement transmise à #Tapi-TEAM.
+    joined_recently = member.joined_at is not None and (
+        datetime.now(timezone.utc) - member.joined_at <= timedelta(days=14)
+    )
+    if joined_recently:
+        try:
+            await message.channel.send("✅ Merci ! L'équipe met à jour ton accès sous peu, bienvenue dans la communauté 🔑")
+        except discord.Forbidden:
+            pass
 
 
 @client.event
